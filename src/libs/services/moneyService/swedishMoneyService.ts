@@ -12,8 +12,8 @@ export class SwedishMoneyService implements IMoneyService {
     if (this.config.market === Market.Sweden) {
       console.log("Made some Swedish money");
       console.log("--------------------------");
+    } else {
+      throw Error("fail");
     }
-
-    throw Error("fail");
   }
 }

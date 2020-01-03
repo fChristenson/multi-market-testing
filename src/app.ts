@@ -1,5 +1,5 @@
-import express from "express";
-import { translationService } from "./libs/services";
+import * as express from "express";
+import { translationService, moneyService } from "./libs/services";
 import { config, Market } from "./configs";
 
 export const app = express();
@@ -11,7 +11,7 @@ app.get("/api/v1/translations", (req, res) => {
 });
 
 app.get("/api/v1/format/bad", (req, res) => {
-  const sum: number = req.query.sum;
+  const sum: number = parseFloat(req.query.sum);
 
   switch (config.market) {
     case Market.Denmark:
@@ -25,7 +25,7 @@ app.get("/api/v1/format/bad", (req, res) => {
 });
 
 app.get("/api/v1/format/really-bad", (req, res) => {
-  const sum: number = req.query.sum;
+  const sum: number = parseFloat(req.query.sum);
 
   switch (process.env.MARKET) {
     case Market.Denmark:
@@ -39,11 +39,11 @@ app.get("/api/v1/format/really-bad", (req, res) => {
 });
 
 app.get("/api/v1/format", (req, res) => {
-  const sum: number = req.query.sum;
+  const sum: number = parseFloat(req.query.sum);
   res.end(sum.toFixed(config.fractionDigits));
 });
 
 app.get("/api/v1/money", (req, res) => {
-  const sum: number = req.query.sum;
-  res.end(sum.toFixed(config.fractionDigits));
+  moneyService.makeMoney();
+  res.end("made money");
 });
